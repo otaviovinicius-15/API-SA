@@ -8,48 +8,19 @@ app = Flask(__name__)
 # --------------------------------------------------
 def conectar():
     return mysql.connector.connect(
-        host="localhost",
+        host="127.0.0.1",
         user="root",
-        password="",  # sua senha aqui
+        password="",  # coloque sua senha caso tenha
         database="supermercadosa",
         port=3306
     )
 
-# TESTAR CONEXÃO ANTES DE INICIAR SERVIDOR
-try:
-    db = conectar()
-    print("Conectado com sucesso ao MySQL!")
-    db.close()
-except Exception as e:
-    print("Erro ao conectar:", e)
-
-
 # --------------------------------------------------
-# ROTA DE LOGIN
+# ROTA DE TESTE
 # --------------------------------------------------
-@app.post("/login")
-def login():
-    dados = request.json
-    usuario = dados["usuario"]
-    senha = dados["senha"]
-
-    db = conectar()
-    cursor = db.cursor(dictionary=True)
-
-    cursor.execute("""
-        SELECT * FROM usuarios 
-        WHERE usuario = %s AND senha = %s
-    """, (usuario, senha))
-
-    user = cursor.fetchone()
-    cursor.close()
-    db.close()
-
-    if user:
-        return jsonify({"success": True, "usuario": user})
-    else:
-        return jsonify({"success": False, "mensagem": "Login inválido"})
-
+@app.get("/")
+def home():
+    return "API do Supermercado SA funcionando!!!"
 
 # --------------------------------------------------
 # LISTAR PRODUTOS
@@ -59,7 +30,7 @@ def listar_produtos():
     db = conectar()
     cursor = db.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM produtos")
+    cursor.execute("SELECT * FROM produto")
     produtos = cursor.fetchall()
 
     cursor.close()
@@ -67,42 +38,15 @@ def listar_produtos():
 
     return jsonify(produtos)
 
-
 # --------------------------------------------------
-# CADASTRAR PRODUTO
+# BUSCAR PRODUTO PELO SKU
 # --------------------------------------------------
-@app.post("/produto")
-def cadastrar_produto():
-    dados = request.json
-    nome = dados["nome"]
-    categoria = dados["categoria"]
-    preco = dados["preco"]
-    estoque = dados["estoque"]
-
-    db = conectar()
-    cursor = db.cursor()
-
-    cursor.execute("""
-        INSERT INTO produtos (nome, categoria, preco, estoque)
-        VALUES (%s, %s, %s, %s)
-    """, (nome, categoria, preco, estoque))
-
-    db.commit()
-    cursor.close()
-    db.close()
-
-    return jsonify({"success": True, "mensagem": "Produto cadastrado!"})
-
-
-# --------------------------------------------------
-# BUSCAR PRODUTO POR ID
-# --------------------------------------------------
-@app.get("/produto/<int:produto_id>")
+@app.get("/produto/<produto_id>")
 def buscar_produto(produto_id):
     db = conectar()
     cursor = db.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM produtos WHERE id = %s", (produto_id,))
+    cursor.execute("SELECT * FROM produto WHERE sku = %s", (produto_id,))
     produto = cursor.fetchone()
 
     cursor.close()
@@ -112,6 +56,36 @@ def buscar_produto(produto_id):
         return jsonify(produto)
     else:
         return jsonify({"success": False, "mensagem": "Produto não encontrado"})
+
+
+# --------------------------------------------------
+# CADASTRAR PRODUTO
+# --------------------------------------------------
+@app.post("/produto")
+def cadastrar_produto():
+    dados = request.json
+    sku = dados["sku"]
+    nome = dados["nome"]
+    descricao = dados["descricao"]
+    preco = dados["preco"]
+    estoque_atual = dados["estoque_atual"]
+    estoque_minimo = dados["estoque_minimo"]
+    exige_idade = dados["exige_idade"]
+
+    db = conectar()
+    cursor = db.cursor()
+
+    cursor.execute("""
+        INSERT INTO produto (sku, nome, descricao, preco, estoque_atual, estoque_minimo, exige_idade)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (sku, nome, descricao, preco, estoque_atual, estoque_minimo, exige_idade))
+
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return jsonify({"success": True, "mensagem": "Produto cadastrado com sucesso!"})
 
 
 # --------------------------------------------------

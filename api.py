@@ -20,7 +20,7 @@ def conectar():
 # --------------------------------------------------
 @app.get("/")
 def home():
-    return "API do Supermercado SA funcionando!!!"
+    return "API do Supermercado SA funcionando!, adicione /(nome da tabela) na barra de link"
 
 # --------------------------------------------------
 # LISTAR PRODUTOS
@@ -183,6 +183,37 @@ def listar_operadorcaixa():
 
     return jsonify(operador)
 
+# --------------------------------------------------
+# LISTAR MOVIMENTAÇÃO DE ESTOQUE
+# --------------------------------------------------
+@app.get("/movimentacaoestoque")
+def listar_movimentacaoestoque():
+    db = conectar()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM movimentacaoestoque")
+    movimentacoes = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    return jsonify(movimentacoes)
+
+# --------------------------------------------------
+# LISTAR ITENS DE VENDA
+# --------------------------------------------------
+@app.get("/itemvenda")
+def listar_itemvenda():
+    db = conectar()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM itemvenda")
+    itens = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    return jsonify(itens)
 
 # --------------------------------------------------
 # INICIAR SERVIDOR

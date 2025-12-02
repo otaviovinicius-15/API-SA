@@ -10,7 +10,7 @@ def conectar():
     return mysql.connector.connect(
         host="127.0.0.1",
         user="root",
-        password="",  # coloque sua senha caso tenha
+        password="", 
         database="supermercadosa",
         port=3306
     )
@@ -58,9 +58,9 @@ def buscar_produto(produto_id):
         return jsonify({"success": False, "mensagem": "Produto não encontrado"})
 
 
-# --------------------------------------------------
+# -------------------------------------------------
 # CADASTRAR PRODUTO
-# --------------------------------------------------
+# -------------------------------------------------
 @app.post("/produto")
 def cadastrar_produto():
     dados = request.json
@@ -86,6 +86,102 @@ def cadastrar_produto():
     db.close()
 
     return jsonify({"success": True, "mensagem": "Produto cadastrado com sucesso!"})
+
+# --------------------------------------------------
+# LISTAR FORNECEDOR 
+# --------------------------------------------------
+@app.get("/fornecedores")
+def listar_fornecedores():
+    db = conectar()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM fornecedor")
+    fornecedores = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    return jsonify(fornecedores)
+
+# --------------------------------------------------
+# LISTAR USUÁRIOS
+# --------------------------------------------------
+@app.get("/usuarios")
+def listar_usuarios():
+    db = conectar()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM usuario")
+    usuarios = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    return jsonify(usuarios)
+
+# --------------------------------------------------
+# LISTAR VENDAS
+# --------------------------------------------------
+@app.get("/venda")
+def listar_venda():
+    db = conectar()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM venda")
+    venda = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    return jsonify(venda)
+
+# --------------------------------------------------
+# LISTAR SUPERVISORES
+# --------------------------------------------------
+@app.get("/supervisor")
+def listar_supervisor():
+    db = conectar()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM supervisor")
+    supervisor = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    return jsonify(supervisor)
+
+# --------------------------------------------------
+# LISTAR PARCELAS
+# --------------------------------------------------
+@app.get("/parcela")
+def listar_parcela():
+    db = conectar()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM parcela")
+    parcela = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    return jsonify(parcela)
+
+# --------------------------------------------------
+# LISTAR OPERADORES DE CAIXA
+# --------------------------------------------------
+@app.get("/operadorcaixa")
+def listar_operadorcaixa():
+    db = conectar()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM operadorcaixa")
+    operador = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    return jsonify(operador)
 
 
 # --------------------------------------------------

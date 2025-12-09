@@ -4,18 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>📦 Sistema AVA.SA — README</title>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial; line-height:1.5; padding:24px; background:#fcfcfd; color:#111827; }
-    h1,h2 { color:#0f172a; margin:0 0 .5rem 0; }
-    p { margin:.25rem 0 1rem 0; }
-    pre { background:#0b1220; color:#e6eef8; padding:12px; border-radius:8px; overflow:auto; }
-    code { background:#eef2ff; padding:2px 6px; border-radius:6px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace; }
-    ul { margin:.25rem 0 1rem 1.25rem; }
-    .section { margin-bottom:1.25rem; }
-    .badge { display:inline-block; padding:4px 8px; background:#eef2ff; border-radius:999px; font-size:.85rem; margin-right:.5rem; }
-    .cmd { display:block; background:#0b1220; color:#e6eef8; padding:10px; border-radius:6px; margin:8px 0; }
-    footer { font-size:.85rem; color:#475569; margin-top:1.5rem; }
-  </style>
 </head>
 <body>
   <h1>📦 Sistema AVA.SA</h1>

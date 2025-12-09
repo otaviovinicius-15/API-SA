@@ -6,31 +6,6 @@ Este repositório contém o **backend** do sistema **AVA.SA**, uma solução des
 
 ---
 
-## 📁 Estrutura do Projeto
-
-```
-SA/
-├── api.py               # Arquivo principal da API
-├── Banco da SA.sql      # Script completo do banco relacional
-├── Modelo logico banco.webp
-
-AVA.SA - 2025/
-├── CANVAS/
-│   └── Modelo Canvas.pdf
-├── REG_NEG/
-│   └── Regras de Negócio.pdf
-├── REQUI_FUN_NFUN/
-│   ├── Requisitos Funcionais.pdf
-│   └── Requisitos Não Funcionais.pdf
-└── UML/
-    ├── ADMINISTRAÇÃO/
-    ├── ESTOQUE/
-    └── VENDAS/
-        # Diagramas de atividades dos principais processos
-```
-
----
-
 ## 🧠 Arquitetura
 
 * **API em Python** — implementada com Flask ou FastAPI (ver `api.py`).
